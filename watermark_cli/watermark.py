@@ -22,7 +22,7 @@ def add_watermark(image_path, output_path, watermark_text):
     with Image.open(image_path) as img:
         watermark = Image.new('RGBA', img.size, (0, 0, 0, 0))
         draw = ImageDraw.Draw(watermark)
-        font = ImageFont.load_default()
+        font = ImageFont.load_default(size=100)
         left, top, right, bottom = draw.textbbox((0, 0), watermark_text, font=font)
         text_width = right - left
         text_height = bottom - top
@@ -50,19 +50,19 @@ def process_images(source_path, watermark_text):
     supported_formats = ('.png', '.jpg', '.jpeg', '.webp', '.tiff', '.bmp', '.gif')
     if os.path.isfile(source_path):
         if source_path.lower().endswith(supported_formats):
-            output_dir = os.path.join(os.path.dirname(source_path), 'watermark_images')
+            output_dir = os.path.join(os.path.dirname(source_path))
             os.makedirs(output_dir, exist_ok=True)
-            output_path = os.path.join(output_dir, os.path.basename(source_path))
+            output_path = os.path.join(output_dir, 'watermark_' + os.path.basename(source_path))
             add_watermark(source_path, output_path, watermark_text)
         else:
             print(f"Error: {source_path} is not a supported image file")
     elif os.path.isdir(source_path):
-        output_dir = os.path.join(source_path, 'watermark_images')
+        output_dir = os.path.join(source_path)
         os.makedirs(output_dir, exist_ok=True)
         for filename in os.listdir(source_path):
             if filename.lower().endswith(supported_formats):
                 input_path = os.path.join(source_path, filename)
-                output_path = os.path.join(output_dir, filename)
+                output_path = os.path.join(output_dir, 'watermark_' + filename)
                 add_watermark(input_path, output_path, watermark_text)
     else:
         print(f"Error: {source_path} is not a valid file or directory")
