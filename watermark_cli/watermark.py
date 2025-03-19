@@ -29,11 +29,6 @@ def add_watermark(image_path, output_path, watermark_text):
         font = ImageFont.load_default(size=100)
         for n in range(20):
             draw = ImageDraw.Draw(watermark)
-            left, top, right, bottom = draw.textbbox((0, 0), watermark_text, font=font)
-            text_width = right - left
-            text_height = bottom - top
-            x = (img.width - text_width) // 2
-            y = (img.height - text_height) // 2
             draw.text((x_text % 5 * -200, y_text), watermark_text, font=font, fill=(0, 0, 0, 30))
             x_text += 1
             y_text += 200
