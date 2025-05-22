@@ -23,8 +23,6 @@ def add_watermark(image_path, output_path, watermark_text):
     with Image.open(image_path) as img:
         x_text = 0
         y_text = 0
-        for o in range(5):
-            watermark_text = watermark_text + "   " + watermark_text
         watermark = Image.new('RGBA', img.size, (0, 0, 0, 0))
         font = ImageFont.load_default(size=100)
         for n in range(20):
